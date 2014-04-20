@@ -4,7 +4,7 @@ jdk:
 branches:
   only:
   - master
-before_script: ./gradlew -i --stacktrace clean refresh-dependencies
+before_script: ./gradlew -i --stacktrace --refresh-dependencies clean
 script: ./gradlew assemble test
     && ./gradlew cucumber
 
