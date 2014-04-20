@@ -36,10 +36,13 @@ apply plugin: 'groovy'
 apply plugin: 'propdeps'
 apply plugin: 'cucumber'
 
+// pushing to sonatype
+apply plugin: 'maven'
+apply plugin: 'signing'
+
 // IDE support
 apply plugin: 'idea'
 apply plugin: 'eclipse'
-
 apply plugin: 'propdeps-idea'
 apply plugin: 'propdeps-eclipse'
 
@@ -59,7 +62,6 @@ ext {
 	spockVersion = "0.7-groovy-2.0"
 
 	isSnapshot = version.endsWith("-SNAPSHOT")
-
 }
 
 sourceCompatibility = 1.6
@@ -83,6 +85,57 @@ cucumber {
 
 check.dependsOn cucumber
 cucumber.shouldRunAfter test
+
+
+signing {
+	sign configurations.archives
+	required { !isSnapshot && gradle.taskGraph.hasTask(uploadArchives) }
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+	classifier = 'javadoc'
+	from 'build/docs/javadoc'
+}
+
+task sourcesJar(type: Jar) {
+	from sourceSets.main.allSource
+	classifier = 'sources'
+}
+
+artifacts {
+	archives jar
+	archives javadocJar
+	archives sourcesJar
+}
+
+uploadArchives { task ->
+	repositories.mavenDeployer {
+		if(!isSnapshot) {
+			beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+		}
+		uniqueVersion = false
+		gradle.taskGraph.whenReady { taskGraph ->
+			if (taskGraph.hasTask(task)) {
+				repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+					authentication(userName: sonatypeOssUsername, password: sonatypeOssPassword)
+				}
+				snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+					authentication(userName: sonatypeOssUsername, password: sonatypeOssPassword)
+				}
+			}
+		}
+	}
+}
+
+task uploadSnapshots << {
+	if(!isSnapshot) {
+		println "Not uploading snapshot as not a snapshot version"
+	}
+}
+if(isSnapshot) {
+	uploadSnapshots.dependsOn(uploadArchives)
+}
+
 
 idea {
 	project {
