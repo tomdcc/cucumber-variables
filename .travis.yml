@@ -1,0 +1,11 @@
+language: java
+jdk:
+  - oraclejdk7
+branches:
+  only:
+  - master
+before_script: ./grailsw clean refresh-dependencies --non-interactive
+script: ./gradlew --non-interactive assemble
+    && ./gradlew --non-interactive test
+    && ./gradlew --non-interactive cucumber
+
