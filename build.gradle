@@ -39,6 +39,7 @@ apply plugin: 'cucumber'
 // pushing to sonatype
 apply plugin: 'maven'
 apply plugin: 'signing'
+apply from: './gradle/pom.gradle'
 
 // IDE support
 apply plugin: 'idea'
@@ -47,7 +48,7 @@ apply plugin: 'propdeps-idea'
 apply plugin: 'propdeps-eclipse'
 
 group = 'io.jdev.cucumber'
-version = '0.1-SNAPSHOT'
+version = '0.1'
 
 repositories {
     mavenLocal()
@@ -90,6 +91,10 @@ cucumber.shouldRunAfter test
 signing {
 	sign configurations.archives
 	required { !isSnapshot && gradle.taskGraph.hasTask(uploadArchives) }
+}
+
+javadoc {
+	title = "Cucumber Variables API $version"
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
