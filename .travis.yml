@@ -12,7 +12,7 @@ script: ./gradlew test
     && ./gradlew -i uploadSnapshots --stacktrace
 env:
   global:
-    - secure: "CeOHuydi4kWGV1i/EAxDdaUiKLMsIcUGJ8hR8mCaX9Y1uC+nLgSKF5q5sMCRaOEnJZ1v4KiuEpk6ZXPYW4xWFHKPwpk9pNQJIDUBFGU1wnjcs/ULCYGR7iuufNcp7bw5lI0Zy6f5Dl1op1/oC+kVozztPBYD3nWI7jwiBV8Ydgs="
-    - secure: "Qeaj/lDE9+BL51ql5ZLtSIj8acM/VPQuF7g+PgPbuMVE0B5J/62Xw4zjPm+6UJ8r3RoUtQkUnuh2ESCwpvMhDXE7ULeYpMIhKHTC2wDTjdQwBckUzVvStHXQxDjkYsFET4jxTagb79DdkpKRD5qjDdAOQTEyOEkdl6opjlQZOpE="
+    - secure: "UMajdsEYj4wB7zs06WsZxxtsN6n14iVRgKwtIjUzWBcNOWKfUXQV7o5eHqoBpTRSEBiLbA9MOi7yAQDIZalH9vJI6z0Aqyvp+EQyytNTAS8RMfMp8G7iEhf26bYjSZaW0VgTDsYgMciTIdPlZ5oyjBoKpd6Iqo9HwPmZxtBQWvE="
+    - secure: "MZH6u8Q83/D/HPYaDMs6bpMJfmAHhGlS5yYGwUL4JZ64AsrkhtV19unXKs0Wp7+BuVjHMPEhqdWEEV9i7a/KrIqKwMQUJ8+JyAFzwdOCbCE+39FiKW7clQQ1pRj4dXLNrGAV3UalDCxU5KtCXfg/co6MPG3b3jBUYILvQ9ccQeY="
 
 
