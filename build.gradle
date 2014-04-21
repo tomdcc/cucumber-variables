@@ -48,7 +48,7 @@ apply plugin: 'propdeps-idea'
 apply plugin: 'propdeps-eclipse'
 
 group = 'io.jdev.cucumber'
-version = '0.1'
+version = '0.2-SNAPSHOT'
 
 repositories {
     mavenLocal()
