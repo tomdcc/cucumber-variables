@@ -51,7 +51,6 @@ group = 'io.jdev.cucumber'
 version = '0.2-SNAPSHOT'
 
 repositories {
-    mavenLocal()
     mavenCentral()
 }
 
