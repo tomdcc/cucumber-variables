@@ -26,15 +26,15 @@ buildscript {
 		maven { url 'http://repo.springsource.org/plugins-release' }
 	}
 	dependencies {
-		classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.5'
-		classpath 'com.github.samueltbrown:gradle-cucumber-plugin:0.5'
+		classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.7'
+		classpath 'com.github.samueltbrown:gradle-cucumber-plugin:0.7'
 	}
 }
 
 apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'propdeps'
-apply plugin: 'cucumber'
+apply plugin: 'com.github.samueltbrown.cucumber'
 
 // pushing to sonatype
 apply plugin: 'maven'
@@ -57,7 +57,7 @@ repositories {
 
 
 ext {
-	cucumberJvmVersion = "1.1.5"
+	cucumberJvmVersion = "1.1.8"
 
 	groovyVersion = "2.2.2"
 	spockVersion = "0.7-groovy-2.0"
@@ -86,6 +86,10 @@ cucumber {
 
 check.dependsOn cucumber
 cucumber.shouldRunAfter test
+
+test {
+	testLogging.exceptionFormat = 'full'
+}
 
 
 signing {
