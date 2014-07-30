@@ -52,7 +52,7 @@ allprojects {
     apply plugin: 'propdeps-eclipse'
 
     group = 'io.jdev.cucumber'
-    version = '0.2-SNAPSHOT'
+    version = '0.2'
 
     ext {
         cucumberJvmVersion = "1.1.8"
