@@ -22,11 +22,11 @@
  * THE SOFTWARE.
  */
 
-package io.jdev.cucumber.variables.en
+package io.jdev.cucumber.variables.java.en
 
 import cucumber.api.Scenario
 import io.jdev.cucumber.variables.VariableScope
-import io.jdev.cucumber.variables.java.en.BasicVariableStepsEN
+import io.jdev.cucumber.variables.en.EnglishDecoder
 import spock.lang.Specification
 
 class BasicVariableStepsSpec extends Specification {
