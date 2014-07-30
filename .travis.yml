@@ -6,7 +6,7 @@ branches:
   - master
 before_install:
   - "export TERM=dumb"
-install: ./gradlew clean assemble
+install: ./gradlew clean resolveAllDependencies assemble
 script: ./gradlew test
     && ./gradlew cucumber
     && ./gradlew -i uploadSnapshots --stacktrace
