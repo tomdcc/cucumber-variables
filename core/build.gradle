@@ -4,11 +4,12 @@ apply plugin: 'signing'
 apply from: "$project.rootDir/gradle/pom.gradle"
 
 dependencies {
+    compile "org.codehaus.groovy:groovy-all:$groovyVersion"
     compile "com.google.guava:guava:16.0"
     provided "info.cukes:cucumber-core:$cucumberJvmVersion"
     provided "info.cukes:cucumber-java:$cucumberJvmVersion"
+    provided "info.cukes:cucumber-groovy:$cucumberJvmVersion"
 
-    testCompile "org.codehaus.groovy:groovy-all:$groovyVersion"
     testCompile "org.spockframework:spock-core:$spockVersion"
     testCompile "cglib:cglib:2.2.2"
 }

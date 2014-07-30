@@ -1,19 +1,19 @@
 apply plugin: 'com.github.samueltbrown.cucumber'
 
 dependencies {
+    testCompile "org.codehaus.groovy:groovy-all:$groovyVersion"
     testCompile 'junit:junit-dep:4.10'
     testCompile "info.cukes:cucumber-core:$cucumberJvmVersion"
-    testCompile "info.cukes:cucumber-java:$cucumberJvmVersion"
+    testCompile "info.cukes:cucumber-groovy:$cucumberJvmVersion"
     testCompile project(':core')
 }
 
 cucumber {
     formats = ['asyougo']
-    glueDirs = ['classpath:io.jdev.cucumber.variables.java.en']
+    glueDirs = ['classpath:io.jdev.cucumber.variables.groovy.en']
     featureDirs = [file('src/cucumber/features').path]
     strict = true
 }
 
 check.dependsOn cucumber
-cucumber.shouldRunAfter test
 

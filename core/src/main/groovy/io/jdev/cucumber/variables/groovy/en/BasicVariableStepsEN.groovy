@@ -22,28 +22,26 @@
  * THE SOFTWARE.
  */
 
-package io.jdev.cucumber.variables.core;
+package io.jdev.cucumber.variables.groovy.en
 
-import cucumber.api.Scenario;
-import io.jdev.cucumber.variables.VariableScope;
+import cucumber.api.Scenario
+import io.jdev.cucumber.variables.core.BasicSteps
+import io.jdev.cucumber.variables.en.EnglishDecoder
 
-public class BasicSteps {
+import static cucumber.api.groovy.Hooks.Before
+import static cucumber.api.groovy.Hooks.After
+import static cucumber.api.groovy.EN.Given
 
-	private VariableScope scope;
+def steps = new BasicSteps()
 
-	public void before(Scenario scenario, Decoder decoder) {
-		scope = VariableScope.getCurrentScope(scenario, decoder);
-	}
+Before() { Scenario scenario ->
+    steps.before(scenario, new EnglishDecoder())
+}
 
-    public void after(Scenario scenario) {
-		VariableScope.removeCurrentScope();
-	}
+After() { Scenario scenario ->
+    steps.after(scenario)
+}
 
-    public void setVariable(String name, Object value) {
-		scope.storeVariable(name, value);
-	}
-
-    public Object getVariable(String name) {
-		return scope.decodeVariable(name);
-	}
+Given(~/^the (.*) is set to (.*)$/) { String name, String value ->
+    steps.setVariable(name, steps.getVariable(value));
 }

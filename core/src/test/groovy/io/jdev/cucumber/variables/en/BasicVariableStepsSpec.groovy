@@ -26,16 +26,17 @@ package io.jdev.cucumber.variables.en
 
 import cucumber.api.Scenario
 import io.jdev.cucumber.variables.VariableScope
+import io.jdev.cucumber.variables.java.en.BasicVariableStepsEN
 import spock.lang.Specification
 
 class BasicVariableStepsSpec extends Specification {
 
-	BasicVariableSteps steps
+	BasicVariableStepsEN steps
 	Scenario scenario
 	Scenario previousScenario
 
 	void setup() {
-		steps = new BasicVariableSteps()
+		steps = new BasicVariableStepsEN()
 		scenario = Mock(Scenario)
 		previousScenario = Mock(Scenario)
 	}

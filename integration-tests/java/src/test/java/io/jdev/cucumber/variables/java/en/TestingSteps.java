@@ -22,28 +22,31 @@
  * THE SOFTWARE.
  */
 
-package io.jdev.cucumber.variables.core;
+package io.jdev.cucumber.variables.java.en;
 
 import cucumber.api.Scenario;
-import io.jdev.cucumber.variables.VariableScope;
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
+import cucumber.api.java.en.Then;
+import io.jdev.cucumber.variables.core.BasicSteps;
+import io.jdev.cucumber.variables.en.EnglishDecoder;
+import org.junit.Assert;
 
-public class BasicSteps {
+public class TestingSteps extends BasicSteps {
 
-	private VariableScope scope;
-
-	public void before(Scenario scenario, Decoder decoder) {
-		scope = VariableScope.getCurrentScope(scenario, decoder);
+	@Before
+	public void before(Scenario scenario) {
+		super.before(scenario, new EnglishDecoder());
 	}
 
-    public void after(Scenario scenario) {
-		VariableScope.removeCurrentScope();
+	@After
+	public void after(Scenario scenario) {
+		super.after(scenario);
 	}
 
-    public void setVariable(String name, Object value) {
-		scope.storeVariable(name, value);
+	@Then("^(the .*) variable has (?:the )?value (?:of )?(.*)$")
+	public void assertValue(String name, String value) {
+		Assert.assertEquals(getVariable(value), getVariable(name));
 	}
 
-    public Object getVariable(String name) {
-		return scope.decodeVariable(name);
-	}
 }

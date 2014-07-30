@@ -22,29 +22,32 @@
  * THE SOFTWARE.
  */
 
-package io.jdev.cucumber.variables.en;
+package io.jdev.cucumber.variables.java.en;
 
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import io.jdev.cucumber.variables.core.BasicSteps;
+import io.jdev.cucumber.variables.en.EnglishDecoder;
 
-public class BasicVariableSteps extends BasicSteps {
+public class BasicVariableStepsEN {
 
-	@Before
+    private BasicSteps steps = new BasicSteps();
+
+    @Before
 	public void before(Scenario scenario) {
-		super.before(scenario, new EnglishDecoder());
+		steps.before(scenario, new EnglishDecoder());
 	}
 
 	@After
 	public void after(Scenario scenario) {
-		super.after(scenario);
+		steps.after(scenario);
 	}
 
 	@Given("^the (.*) is set to (.*)$")
 	public void set(String name, String value) {
-		setVariable(name, getVariable(value));
+		steps.setVariable(name, steps.getVariable(value));
 	}
 
 }

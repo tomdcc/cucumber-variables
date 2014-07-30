@@ -22,30 +22,27 @@
  * THE SOFTWARE.
  */
 
-package io.jdev.cucumber.variables.en;
+package io.jdev.cucumber.variables.groovy.en
 
-import cucumber.api.Scenario;
-import cucumber.api.java.After;
-import cucumber.api.java.Before;
-import cucumber.api.java.en.Then;
-import io.jdev.cucumber.variables.core.BasicSteps;
-import org.junit.Assert;
+import cucumber.api.Scenario
+import io.jdev.cucumber.variables.core.BasicSteps
+import io.jdev.cucumber.variables.en.EnglishDecoder
+import org.junit.Assert
 
-public class TestingSteps extends BasicSteps {
+import static cucumber.api.groovy.Hooks.Before
+import static cucumber.api.groovy.Hooks.After
+import static cucumber.api.groovy.EN.Then
 
-	@Before
-	public void before(Scenario scenario) {
-		super.before(scenario, new EnglishDecoder());
-	}
+def steps = new BasicSteps()
 
-	@After
-	public void after(Scenario scenario) {
-		super.after(scenario);
-	}
+Before() { Scenario scenario ->
+    steps.before(scenario, new EnglishDecoder())
+}
 
-	@Then("^(the .*) variable has (?:the )?value (?:of )?(.*)$")
-	public void assertValue(String name, String value) {
-		Assert.assertEquals(getVariable(value), getVariable(name));
-	}
+After() { Scenario scenario ->
+    steps.after(scenario)
+}
 
+Then(~/^(the .*) variable has (?:the )?value (?:of )?(.*)$/) { String name, String value ->
+    Assert.assertEquals(steps.getVariable(value), steps.getVariable(name));
 }
