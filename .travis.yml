@@ -9,7 +9,7 @@ before_install:
 install: ./gradlew clean resolveAllDependencies assemble
 script: ./gradlew test
     && ./gradlew cucumber
-    && ./gradlew -i uploadSnapshots --stacktrace
+    && ./gradlew uploadSnapshots
 env:
   global:
     - secure: "UMajdsEYj4wB7zs06WsZxxtsN6n14iVRgKwtIjUzWBcNOWKfUXQV7o5eHqoBpTRSEBiLbA9MOi7yAQDIZalH9vJI6z0Aqyvp+EQyytNTAS8RMfMp8G7iEhf26bYjSZaW0VgTDsYgMciTIdPlZ5oyjBoKpd6Iqo9HwPmZxtBQWvE="
