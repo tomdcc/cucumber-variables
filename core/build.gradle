@@ -1,0 +1,73 @@
+// pushing to sonatype
+apply plugin: 'maven'
+apply plugin: 'signing'
+apply from: "$project.rootDir/gradle/pom.gradle"
+
+dependencies {
+    compile "com.google.guava:guava:16.0"
+    provided "info.cukes:cucumber-core:$cucumberJvmVersion"
+    provided "info.cukes:cucumber-java:$cucumberJvmVersion"
+
+    testCompile "org.codehaus.groovy:groovy-all:$groovyVersion"
+    testCompile "org.spockframework:spock-core:$spockVersion"
+    testCompile "cglib:cglib:2.2.2"
+}
+
+test {
+    testLogging.exceptionFormat = 'full'
+}
+
+
+signing {
+    sign configurations.archives
+    required { !isSnapshot && gradle.taskGraph.hasTask(uploadArchives) }
+}
+
+javadoc {
+    title = "Cucumber Variables API $version"
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from 'build/docs/javadoc'
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+artifacts {
+    archives jar
+    archives javadocJar
+    archives sourcesJar
+}
+
+uploadArchives { task ->
+    repositories.mavenDeployer {
+        if(!isSnapshot) {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+        }
+        uniqueVersion = false
+        gradle.taskGraph.whenReady { taskGraph ->
+            if (taskGraph.hasTask(task)) {
+                repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                    authentication(userName: sonatypeOssUsername, password: sonatypeOssPassword)
+                }
+                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                    authentication(userName: sonatypeOssUsername, password: sonatypeOssPassword)
+                }
+            }
+        }
+    }
+}
+
+task uploadSnapshots << {
+    if(!isSnapshot) {
+        println "Not uploading snapshot as not a snapshot version"
+    }
+}
+if(isSnapshot) {
+    uploadSnapshots.dependsOn(uploadArchives)
+}
+

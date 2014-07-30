@@ -43,6 +43,7 @@ tasks.withType(Upload) {
 
 modifyPom {
 	project {
+        artifactId = 'cucumber-variables'
 		name "Cucumber Variables"
 		description "Cucumber Variables is a library to assist writing Cucumber-JVM steps"
 		url "https://github.com/tomdcc/cucumber-variables/"
