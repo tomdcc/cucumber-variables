@@ -49,6 +49,11 @@ class StringLiteralDecoderSpec extends Specification {
         decoder.decode(vars, "'foo\nbar'") == 'foo\nbar'
     }
 
+    void "string literal with escaped newline decoded correctly"() {
+        expect:
+        decoder.decode(vars, "'foo\\nbar'") == 'foo\nbar'
+    }
+
     void "non-string-literal returns"() {
 		expect:
 		decoder.decode(vars, "foo'") == null

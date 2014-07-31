@@ -38,9 +38,13 @@ public class StringLiteralDecoder implements Decoder {
 		}
 		Matcher matcher = STRING_LITERAL_PATTERN.matcher(name);
 		if(matcher.matches()) {
-			return matcher.group(1);
+			return cleanupString(matcher.group(1));
 		} else {
 			return null;
 		}
 	}
+
+    private String cleanupString(String src) {
+        return src.replaceAll("\\\\n", "\n");
+    }
 }
