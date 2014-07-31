@@ -41,7 +41,12 @@ class StringLiteralDecoderSpec extends Specification {
 		decoder.decode(vars, "'foo'") == 'foo'
 	}
 
-	void "non-string-literal returns"() {
+    void "multi-line string literal is decoded correctly"() {
+        expect:
+        decoder.decode(vars, "'foo\nbar'") == 'foo\nbar'
+    }
+
+    void "non-string-literal returns"() {
 		expect:
 		decoder.decode(vars, "foo'") == null
 

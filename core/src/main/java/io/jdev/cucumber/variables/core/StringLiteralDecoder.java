@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
 
 public class StringLiteralDecoder implements Decoder {
 
-	private static final Pattern STRING_LITERAL_PATTERN = Pattern.compile("'(.*)'");
+	private static final Pattern STRING_LITERAL_PATTERN = Pattern.compile("(?s)'(.*)'");
 
 	@Override
 	public Object decode(VariableSet vars, String name) {
