@@ -39,6 +39,9 @@ class StringLiteralDecoderSpec extends Specification {
 	void "string literal is decoded correctly"() {
 		expect:
 		decoder.decode(vars, "'foo'") == 'foo'
+
+		and:
+		decoder.decode(vars, '"foo"') == 'foo'
 	}
 
     void "multi-line string literal is decoded correctly"() {
@@ -55,5 +58,8 @@ class StringLiteralDecoderSpec extends Specification {
 
 		and:
 		decoder.decode(vars, "foo") == null
+
+        and:
+        decoder.decode(vars, "s'foo's") == null
 	}
 }
