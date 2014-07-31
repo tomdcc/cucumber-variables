@@ -32,21 +32,31 @@ import io.jdev.cucumber.variables.core.BasicSteps;
 import io.jdev.cucumber.variables.en.EnglishDecoder;
 import org.junit.Assert;
 
+import java.util.regex.Pattern;
+
 public class TestingSteps extends BasicSteps {
+
+    BasicSteps steps = new BasicSteps();
 
 	@Before
 	public void before(Scenario scenario) {
-		super.before(scenario, new EnglishDecoder());
+		steps.before(scenario, new EnglishDecoder());
 	}
 
 	@After
 	public void after(Scenario scenario) {
-		super.after(scenario);
+		steps.after(scenario);
 	}
 
 	@Then("^(the .*) variable has (?:the )?value (?:of )?(.*)$")
-	public void assertValue(String name, String value) {
-		Assert.assertEquals(getVariable(value), getVariable(name));
+	public void assertValue(String name, String rawValue) {
+        Object expectedValue = steps.getVariable(rawValue);
+        String actualValue = (String) steps.getVariable(name);
+        if(expectedValue instanceof Pattern) {
+            Assert.assertTrue(((Pattern) expectedValue).matcher(actualValue).matches());
+        } else {
+            Assert.assertEquals(expectedValue, actualValue);
+        }
 	}
 
 }

@@ -22,35 +22,25 @@
  * THE SOFTWARE.
  */
 
-package io.jdev.cucumber.variables.groovy.en
+package io.jdev.cucumber.variables.core;
 
-import cucumber.api.Scenario
-import io.jdev.cucumber.variables.core.BasicSteps
-import io.jdev.cucumber.variables.en.EnglishDecoder
-import org.junit.Assert
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import java.util.regex.Pattern
+public class RegexLiteralDecoder implements Decoder {
 
-import static cucumber.api.groovy.Hooks.Before
-import static cucumber.api.groovy.Hooks.After
-import static cucumber.api.groovy.EN.Then
+	private static final Pattern REGEX_LITERAL_PATTERN = Pattern.compile("\\/(.*)\\/");
 
-def steps = new BasicSteps()
-
-Before() { Scenario scenario ->
-    steps.before(scenario, new EnglishDecoder())
-}
-
-After() { Scenario scenario ->
-    steps.after(scenario)
-}
-
-Then(~/^(the .*) variable has (?:the )?value (?:of )?(.*)$/) { String name, String rawValue ->
-    Object expectedValue = steps.getVariable(rawValue)
-    String actualValue = steps.getVariable(name)
-    if(expectedValue instanceof Pattern) {
-        Assert.assertTrue(((Pattern) expectedValue).matcher(actualValue).matches())
-    } else {
-        Assert.assertEquals(expectedValue, actualValue)
-    }
+	@Override
+	public Object decode(VariableSet vars, String name) {
+		if(name == null) {
+			return null;
+		}
+		Matcher matcher = REGEX_LITERAL_PATTERN.matcher(name);
+		if(matcher.matches()) {
+            return Pattern.compile(matcher.group(1));
+		} else {
+			return null;
+		}
+	}
 }

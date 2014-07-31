@@ -24,6 +24,7 @@
 
 package io.jdev.cucumber.variables.en;
 
+import io.jdev.cucumber.variables.core.RegexLiteralDecoder;
 import io.jdev.cucumber.variables.core.RegexVariableDecoder;
 import io.jdev.cucumber.variables.core.ChainedDecoder;
 import io.jdev.cucumber.variables.core.StringLiteralDecoder;
@@ -33,7 +34,8 @@ public class EnglishDecoder extends ChainedDecoder {
 	public EnglishDecoder() {
 		super(
 			new RegexVariableDecoder("the(?: (\\d+)(?:st|nd|rd|th))? (.*)", 2, 1),
-			new StringLiteralDecoder()
+			new StringLiteralDecoder(),
+			new RegexLiteralDecoder()
 		);
 	}
 

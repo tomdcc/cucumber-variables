@@ -22,35 +22,56 @@
  * THE SOFTWARE.
  */
 
-package io.jdev.cucumber.variables.groovy.en
 
-import cucumber.api.Scenario
-import io.jdev.cucumber.variables.core.BasicSteps
-import io.jdev.cucumber.variables.en.EnglishDecoder
-import org.junit.Assert
+
+package io.jdev.cucumber.variables.core
+
+import spock.lang.Specification
 
 import java.util.regex.Pattern
+import java.util.regex.PatternSyntaxException
 
-import static cucumber.api.groovy.Hooks.Before
-import static cucumber.api.groovy.Hooks.After
-import static cucumber.api.groovy.EN.Then
+class RegexLiteralDecoderSpec extends Specification {
 
-def steps = new BasicSteps()
+	RegexLiteralDecoder decoder
+	VariableSet vars
 
-Before() { Scenario scenario ->
-    steps.before(scenario, new EnglishDecoder())
-}
+	void setup() {
+		decoder = new RegexLiteralDecoder()
+		vars = Mock(VariableSet)
+	}
 
-After() { Scenario scenario ->
-    steps.after(scenario)
-}
+	void "regex literal is decoded correctly"() {
+		when:
+		def result = decoder.decode(vars, "/foo/")
 
-Then(~/^(the .*) variable has (?:the )?value (?:of )?(.*)$/) { String name, String rawValue ->
-    Object expectedValue = steps.getVariable(rawValue)
-    String actualValue = steps.getVariable(name)
-    if(expectedValue instanceof Pattern) {
-        Assert.assertTrue(((Pattern) expectedValue).matcher(actualValue).matches())
-    } else {
-        Assert.assertEquals(expectedValue, actualValue)
-    }
+        then:
+        result instanceof Pattern
+        result.pattern() == 'foo'
+	}
+
+	void "invalid regex literal throws exception"() {
+		when:
+		decoder.decode(vars, "/\\/")
+
+        then:
+        thrown(PatternSyntaxException)
+	}
+
+	void "non-regex-literal returns null"() {
+		expect:
+		decoder.decode(vars, "foo/") == null
+
+		and:
+		decoder.decode(vars, "/foo") == null
+
+		and:
+		decoder.decode(vars, "foo") == null
+
+        and:
+        decoder.decode(vars, "m/foo/") == null
+
+        and:
+        decoder.decode(vars, "/foo/m") == null
+	}
 }
