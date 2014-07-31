@@ -27,7 +27,7 @@ variables.
 
 Mostly at the moment this is used by the
 [geb-cucumber](https://github.com/tomdcc/geb-cucumber) project. See more
-examples there an in the build output at https://travis-ci.org/tomdcc/geb-cucumber. 
+examples there and in the build output at https://travis-ci.org/tomdcc/geb-cucumber. 
 
 Changelog
 ---------
