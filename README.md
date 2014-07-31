@@ -1,4 +1,4 @@
-cucumber-variables ![Build status](https://travis-ci.org/tomdcc/cucumber-variables.svg?branch=master)
+cucumber-variables [![Build Status](https://travis-ci.org/tomdcc/cucumber-variables.svg?branch=master)](https://travis-ci.org/tomdcc/cucumber-variables)
 ==================
 
 A library for developers writing cucumber-jvm steps.
