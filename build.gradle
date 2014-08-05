@@ -52,13 +52,13 @@ allprojects {
     apply plugin: 'propdeps-eclipse'
 
     group = 'io.jdev.cucumber'
-    version = '0.4'
+    version = '0.5-SNAPSHOT'
 
     ext {
         cucumberJvmVersion = "1.1.8"
 
-        groovyVersion = "2.2.2"
-        spockVersion = "0.7-groovy-2.0"
+        groovyVersion = "1.8.6"
+        spockVersion = "0.7-groovy-1.8"
 
         isSnapshot = version.endsWith("-SNAPSHOT")
     }
