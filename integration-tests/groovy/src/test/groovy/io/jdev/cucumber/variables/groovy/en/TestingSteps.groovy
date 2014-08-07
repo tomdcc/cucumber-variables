@@ -24,6 +24,7 @@
 
 package io.jdev.cucumber.variables.groovy.en
 
+import cucumber.api.DataTable
 import cucumber.api.Scenario
 import io.jdev.cucumber.variables.core.BasicSteps
 import io.jdev.cucumber.variables.en.EnglishDecoder
@@ -33,6 +34,7 @@ import java.util.regex.Pattern
 
 import static cucumber.api.groovy.Hooks.Before
 import static cucumber.api.groovy.Hooks.After
+import static cucumber.api.groovy.EN.Given
 import static cucumber.api.groovy.EN.Then
 
 def steps = new BasicSteps()
@@ -53,4 +55,8 @@ Then(~/^(the .*) variable has (?:the )?value (?:of )?(.*)$/) { String name, Stri
     } else {
         Assert.assertEquals(expectedValue, actualValue)
     }
+}
+
+Given(~/^the (.*) is a map with values:$/) { String name, DataTable dataTable ->
+    steps.setVariable(name, dataTable.asMap(String, String))
 }

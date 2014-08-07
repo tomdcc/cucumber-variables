@@ -22,3 +22,10 @@ Feature: Test Variables
     | cat_name     |
     | 'Piccadilly' |
     | 'Blah'       |
+
+  Scenario: Test Nested Variables
+    Given the cat is a map with values:
+      | name       | Piccadilly |
+      | bodyColour | White      |
+    Then the cat name variable has value 'Piccadilly'
+    Then the cat body colour variable has value 'White'
