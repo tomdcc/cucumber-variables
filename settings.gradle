@@ -1,1 +1,2 @@
-include 'core', 'integration-tests:java', 'integration-tests:groovy'
+include 'core', 'integration-tests:java', 'integration-tests:groovy',
+        'integration-tests:java_nl','integration-tests:groovy_nl'
