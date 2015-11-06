@@ -52,11 +52,11 @@ uploadArchives { task ->
         uniqueVersion = false
         gradle.taskGraph.whenReady { taskGraph ->
             if (taskGraph.hasTask(task)) {
-                repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                    authentication(userName: sonatypeOssUsername, password: sonatypeOssPassword)
+                repository(url: "http://sldka.cak-bz.local:8080/nexus-webapp-1.8.0/content/repositories/releases/") {
+                    authentication(userName: "deployment", password: "h0o4c2h5d8")
                 }
-                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                    authentication(userName: sonatypeOssUsername, password: sonatypeOssPassword)
+                snapshotRepository(url: "http://sldka.cak-bz.local:8080/nexus-webapp-1.8.0/content/repositories/snapshots/") {
+                    authentication(userName: "deployment", password: "h0o4c2h5d8")
                 }
             }
         }
